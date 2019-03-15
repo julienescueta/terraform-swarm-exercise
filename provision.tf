@@ -13,7 +13,12 @@ resource "aws_instance" "cj" {
   user_data     = "${file("install-docker.sh")}"
   provisioner "file" {
     source      = "./docker-compose.yml"
-    destination = "/home/docker-compose.yml"
+    destination = "/home/ec2-user/docker-compose.yml"
+    connection {
+      type     = "ssh"
+      user     = "ec2-user"
+      private_key  = "${file("/home/julien/compassionjournal-aws-key.pem")}"
+    }
   }
 
 }
